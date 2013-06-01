@@ -1,0 +1,22 @@
+<%= form_tag("/getoff_infos/search",:method => "get") do %>
+<div class = search>
+<div id = "button">
+  <%= image_submit_tag "seat_main.png", :id => "icon" %>
+</div>
+<div id = "text_field">  
+  <%= text_field_tag :station_name, nil, :id => "input", :placeholder => "Enter a station name for your seat here!!" %>
+  <%= hidden_field_tag(:current_time,Time.now.utc.iso8601) %>
+</div>
+<% end %>
+
+<script type="text/javascript">
+  $('.icon').mouseover(function(){
+    if ($(this).attr("class") == "icon") {
+      this.src = this.src.replace("seat_main.png","seat_click.png");
+  }}).mouseout(function(){
+    this.src = this.src.replace("seat_click.png","seat_main.png")
+    });
+</script>
+
+
+    
