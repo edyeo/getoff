@@ -1,10 +1,10 @@
 class ChangeStation < ActiveRecord::Migration
-  def up
+  def self.up
       add_column :stations, :code, :string
       add_column :stations, :fr_code, :string
   end
 
-  def down
+  def self.down
       remove_column :stations, :code, :string
       remove_column :stations, :fr_code, :string
   end

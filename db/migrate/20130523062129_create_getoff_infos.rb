@@ -1,5 +1,5 @@
 class CreateGetoffInfos < ActiveRecord::Migration
-  def change
+  def change 
     create_table :getoff_infos do |t|
       t.integer :user_id
       t.integer :station_id

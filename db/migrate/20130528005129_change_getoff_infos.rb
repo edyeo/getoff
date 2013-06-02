@@ -1,9 +1,11 @@
 class ChangeGetoffInfos < ActiveRecord::Migration
-  def up
-    change_column :getoff_infos, :user_id, :user, :string
+  def self.up
+    rename_column :getoff_infos, :user_id, :user
+    change_column :getoff_infos, :user, :string
   end
 
-  def down
-    change_column :getoff_infos, :user, :user_id, :integer
+  def self.down
+    rename_column :getoff_infos, :user, :user_id
+    change_column :getoff_infos, :user_id, :integer
   end
 end
