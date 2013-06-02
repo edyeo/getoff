@@ -1,9 +1,9 @@
 class ChangeGetoffInfos < ActiveRecord::Migration
   def up
-    remove_column(:getoff_infos, :user_id)
+    change_column :getoff_infos, :user_id, :user, :string
   end
 
   def down
-    add_column  :user, :string
+    change_column :getoff_infos, :user, :user_id, :integer
   end
 end
