@@ -1,4 +1,4 @@
-<%= form_tag("/getoff_infos/search",:method => "get") do %>
+<%= form_tag("/getoff_infos/search",:method => "get", :class => "search_form") do %>
 <div class = search>
 <div id = "button">
   <%= image_submit_tag "seat_main.png", :id => "icon" %>
@@ -10,12 +10,31 @@
 <% end %>
 
 <script type="text/javascript">
-  $('.icon').mouseover(function(){
-    if ($(this).attr("class") == "icon") {
-      this.src = this.src.replace("seat_main.png","seat_click.png");
-  }}).mouseout(function(){
-    this.src = this.src.replace("seat_click.png","seat_main.png")
-    });
+  $(document).ready(function() {
+   
+    //mouse hove effect on sumit icon
+    var newPhoto = new Image();
+    newPhoto.src = '/assets/seat_click.png';
+    var oldSrc=$('#icon').attr('src');
+    
+    $('#icon').hover(
+      function() {
+        $(this).attr('src',newPhoto.src);
+      },
+      function(){
+        $(this).attr('src', oldSrc);
+      }
+    );
+   
+   });
+
+    $('form').submit(function() {
+      if($('#input').val() == '') {
+        $('#input').attr("placeholder", "Please insert a station name");
+        $('#input').addClass("ask_to_fill_in")
+        return false;
+      }
+   }); 
 </script>
 
 
