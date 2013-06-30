@@ -41,15 +41,27 @@ class GetoffInfosController < ApplicationController
   # POST /getoff_infos
   # POST /getoff_infos.json
   def create
-    @getoff_info = GetoffInfo.new(params[:getoff_info])
-
     respond_to do |format|
-      if @getoff_info.save
-        format.html { redirect_to @getoff_info, :notice => 'Getoff info was successfully created.' }
-        format.json { render :json => @getoff_info, :status => :created, :location => @getoff_info }
+    @getoff_info = GetoffInfo.new()
+    @getoff_info.station_name = params["station_name"]
+    @getoff_info.line_num = params["line_num"]
+    @getoff_info.container_num = params["container_num"]
+    @getoff_info.hint = params["hint"]
+  
+  if @getoff_info.save
+        if params[:callback]
+          format.js { render :json => @getoff_info, :callback => params[:callback]}
+        else
+          format.html { redirect_to @getoff_info, :notice => 'Getoff info was successfully created.' }
+          format.json { render :json => @getoff_info, :status => :created, :location => @getoff_info }
+        end
       else
-        format.html { render :action => "new" }
-        format.json { render :json => @getoff_info.errors, :status => :unprocessable_entity }
+        if params[:callback]
+          format.js { render :json => @getoff_info,  :callback => params[:callback]}
+        else
+          format.html { render :action => "new" }
+          format.json { render :json => @getoff_info.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
@@ -88,6 +100,15 @@ class GetoffInfosController < ApplicationController
       @seats = GetoffInfo.find_all_by_station_name(station_name, :order => "time")
     else
       @seats = nil 
+    end
+    
+    respond_to do |format|
+      if params[:callback]
+        format.js { render :json => {:seatlist => @seats}, :excluded => :updated_at,:callback => params[:callback]}
+      else
+        format.json { render json: {:items_by_tag => @seats }}
+        format.html { render json: {:items_by_tag => @tagged_item_list}} 
+      end
     end
   end
 

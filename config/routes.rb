@@ -3,12 +3,15 @@ GetoffApp::Application.routes.draw do
 
   resources :users
 
+  resources :pusher
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
   # Keep in mind you can assign values other than :controller and :action
+
+  match "*options", controller: "application", action: "options", constraints: { method: "OPTIONS" }
 
   # Sample of named route:
   #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
